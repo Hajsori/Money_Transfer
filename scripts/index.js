@@ -83,6 +83,10 @@ Minecraft.system.run(function tick(){
 
 Minecraft.system.beforeEvents.watchdogTerminate.subscribe((data) => data.cancel = true)
 
+Minecraft.world.afterEvents.worldInitialize.subscribe(() => {
+    console.warn("[§r§aMoney §eTransfer§r] Loaded Addon")
+})
+
 
 /**
  * 
