@@ -4,7 +4,7 @@
         "name": "§r§aMoney §eTransfer§r",
         "description": "§r§bAn easy §aMoney §eTransfer §bscript!\nJust type §l§2!pay §r§bin the Chat!§r\n§4You can change the Scoreboard with §l/function moneyTransfer/settings§r\n\n§7Made by §lHajsori§r",
         "uuid": "49f83f2a-3250-f8ec-5684-26b3856ec586",
-        "version": [2, 0, 0],
+        "version": [2, 0, 1],
         "min_engine_version": [1, 17, 0]
     },
     "modules": [

@@ -66,7 +66,7 @@ Minecraft.system.beforeEvents.startup.subscribe((event) => {
                 }
                 const moneyScoreboard = Minecraft.world.scoreboard?.getObjective(moneyObjective)
                 const playerMoney = moneyScoreboard?.getScore(origin.sourceEntity) ?? 0
-                if (playerMoney < amount) {
+                if (playerMoney < (amount * targets.length)) {
                     origin.sourceEntity.sendMessage(texts[language].notEnoughMoney)
                     return
                 }
