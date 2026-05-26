@@ -47,45 +47,60 @@ Minecraft.system.beforeEvents.startup.subscribe((event) => {
             ]
         },
         /**
-         * 
+         * @param {Minecraft.CustomCommandOrigin} origin
          * @param {Minecraft.Player[]} targets
          * @param {number} amount
          * @param {string} greeting
          * @returns {void}
          */
         (origin, targets, amount, greeting) => {
-            targets = targets.filter((target) => target.id !== origin.sourceEntity.id && target.isValid)
+            if (!(origin.sourceEntity instanceof Minecraft.Player)) {
+                return;
+            }
+
+            /**
+             * @type {Minecraft.Player}
+             */
+            const sourcePlayer = origin.sourceEntity;
+
             Minecraft.system.run(() => {
-                if (!targets.length) {
-                    origin.sourceEntity.sendMessage(texts[language].notOnline)
-                    return
-                }
-                if (isNaN(amount) || amount < minTransfer || (maxTransfer != -1 && amount > maxTransfer)) {
-                    origin.sourceEntity.sendMessage(texts[language].enterValidNumber)
-                    return
-                }
-                const moneyScoreboard = Minecraft.world.scoreboard?.getObjective(moneyObjective)
-                const playerMoney = moneyScoreboard?.getScore(origin.sourceEntity) ?? 0
-                if (playerMoney < (amount * targets.length)) {
-                    origin.sourceEntity.sendMessage(texts[language].notEnoughMoney)
-                    return
+                if (targets.find((target) => target.id === sourcePlayer.id)) {
+                    sourcePlayer.sendMessage(texts[language].cannotPayYourself);
+                    return;
                 }
 
-                let greet = "."
+                targets = targets.filter((target) => target.id !== sourcePlayer.id && target.isValid);
+
+                if (!targets.length) {
+                    sourcePlayer.sendMessage(texts[language].notOnline);
+                    return;
+                }
+                if (isNaN(amount) || amount < minTransfer || (maxTransfer !== -1 && amount > maxTransfer)) {
+                    sourcePlayer.sendMessage(texts[language].enterValidNumber);
+                    return;
+                }
+                const moneyScoreboard = Minecraft.world.scoreboard?.getObjective(moneyObjective);
+                const playerMoney = moneyScoreboard?.getScore(sourcePlayer) ?? 0;
+                if (playerMoney < (amount * targets.length)) {
+                    sourcePlayer.sendMessage(texts[language].notEnoughMoney);
+                    return;
+                }
+
+                let greet = ".";
                 if (greeting) {
-                    greet = texts[language].withGreet.replace("{greet}", greeting)
+                    greet = texts[language].withGreet.replace("{greet}", greeting);
                 }
 
                 for (const target of targets) {
-                    moneyScoreboard.addScore(target, amount)
-                    target.sendMessage(texts[language].transferredPlayer.replace("{player}", origin.sourceEntity.name).replace("{money}", amount).replace("{greet}", greet))
+                    moneyScoreboard.addScore(target, amount);
+                    target.sendMessage(texts[language].transferredPlayer.replace("{player}", sourcePlayer.name).replace("{money}", amount).replace("{greet}", greet));
                 }
-                moneyScoreboard.addScore(origin.sourceEntity.scoreboardIdentity, -amount * targets.length)
-                
-                origin.sourceEntity.sendMessage(texts[language].transferred.replace("{player}", targets.map(target => target.name).join(", ")).replace("{money}", amount).replace("{greet}", greet))
-            })
+                moneyScoreboard.addScore(sourcePlayer.scoreboardIdentity, -amount * targets.length);
+
+                sourcePlayer.sendMessage(texts[language].transferred.replace("{player}", targets.map(target => target.name).join(", ")).replace("{money}", amount).replace("{greet}", greet));
+            });
         }
-    )
+    );
 
     event.customCommandRegistry.registerCommand(
         {
@@ -95,15 +110,15 @@ Minecraft.system.beforeEvents.startup.subscribe((event) => {
         },
         (origin) => {
             Minecraft.system.run(() => {
-                if (origin.sourceType == Minecraft.CustomCommandSource.Entity && origin.sourceEntity.typeId == "minecraft:player") {
-                    showSettingsMenu(origin.sourceEntity)
-                } else if (origin.sourceType == Minecraft.CustomCommandSource.NPCDialogue && origin.initiator.typeId == "minecraft:player") {
-                    showSettingsMenu(origin.initiator)
+                if (origin.sourceType === Minecraft.CustomCommandSource.Entity && origin.sourceEntity.typeId === "minecraft:player") {
+                    showSettingsMenu(origin.sourceEntity);
+                } else if (origin.sourceType === Minecraft.CustomCommandSource.NPCDialogue && origin.initiator.typeId === "minecraft:player") {
+                    showSettingsMenu(origin.initiator);
                 }
-            })
+            });
         }
-    )
-})
+    );
+});
 
 Minecraft.world.afterEvents.worldLoad.subscribe(() => {
     console.warn("[§r§aMoney §eTransfer§r] Loaded Addon")

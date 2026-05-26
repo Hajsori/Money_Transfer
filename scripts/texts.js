@@ -14,6 +14,7 @@ const en = {
     transferred: "§r§8[§aMoney §eTransfer§8] §bYou have successfully transferred §l§9{player} §a{money} §r§aMoney§b{greet}§r",
     transferredPlayer: "§r§8[§aMoney §eTransfer§8] §l§9{player} §r§bhas successfully transferred §a§l{money} §r§aMoney §bto you{greet}§r",
     notOnline: "§r§8[§aMoney §eTransfer§8] §cThe player is not online.§r",
+    cannotPayYourself: "§r§8[§aMoney §eTransfer§8] §cYou can't transfer Money to yourself!§r",
     notEnoughMoneyMin: "§r§8[§aMoney §eTransfer§8] §cYou need to pay at least §l{money}§r §cMoney!§r",
     notEnoughMoneyMax: "§r§8[§aMoney §eTransfer§8] §cYou can't pay more than §l{money}§r §cMoney!§r"
 }
@@ -33,6 +34,7 @@ const de = {
     transferred: "§r§8[§aMoney §eTransfer§8] §bDu hast erfolgreich §l§9{player} §a{money} §r§aGeld §büberwiesen{greet}",
     transferredPlayer: "§r§8[§aMoney §eTransfer§8] §l§9{player} §r§bhat dir §a§l{money} §r§aGeld §büberwiesen{greet}",
     notOnline: "§r§8[§aMoney §eTransfer§8] §cDer Spieler ist nicht online.§r",
+    cannotPayYourself: "§r§8[§aMoney §eTransfer§8] §cDu kannst dir selbst kein Geld überweisen!§r",
     notEnoughMoneyMin: "§r§8[§aMoney §eTransfer§8] §cDu musst mindestens §l{money}§r§c Geld überweisen!§r",
     notEnoughMoneyMax: "§r§8[§aMoney §eTransfer§8] §cDu kannst nicht mehr als §l{money}§r §cGeld überweisen!§r"
 }
@@ -52,6 +54,7 @@ const ru = {
     transferred: "§r§8[§aДенежный переводчик§8] §bВы успешно перевели игроку §l§9{player} §a{money} монет.§r§b{greet}§r",
     transferredPlayer: "§r§8[§aДенежный переводчик§8] §l§9{player} §r§bуспешно перевел §a§l{money} монет §r§bдля тебя.{greet}§r",
     notOnline: "§r§8[§aДенежный переводчик§8] §cИгрок не в сети.§r",
+    cannotPayYourself: "§r§8[§aДенежный переводчик§8] §cВы не можете перевести деньги самому себе!§r",
     notEnoughMoneyMin: "§r§8[§aДенежный переводчик§8] §cСлишком маленькая сумма! Нужно отправить минимум §l{money}§r§c монет, чтобы совершить перевод!§r",
     notEnoughMoneyMax: "§r§8[§aДенежный переводчик§8] §cСлишком большая сумма! Вы не можете переводить больше чем §l{money} монет§r§c!§r"
 }
